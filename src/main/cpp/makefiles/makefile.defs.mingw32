@@ -1,0 +1,32 @@
+# File: makefile.defs.mingw32
+# System: MinGW (32-bit)
+# Greg Hedlund, 26 Aug 2016
+
+MINGW = /mingw32
+JAWT = $(MINGW)/java/lib/jawt.lib
+
+LD = $(MINGW)/bin/g++
+CXX = $(MINGW)/bin/g++ -c -std=gnu++0x -isystem $(MINGW)/include/c++/4.7.0 -isystem $(MINGW)/include  -Wshadow
+
+INCLUDE = -I../../../target/generated-sources/cpp/include -I$(MINGW)/java/include -I$(MINGW)/java/include/win32
+CXXFLAGS = -DWINVER=0x0600 -D_WIN32_WINNT=0x0600 -D_WIN32_IE=0x0600 -DUNICODE -D_FILE_OFFSET_BITS=64 -O1 $(INCLUDE)
+LDFLAGS = -shared -mwindows -Wl,--subsystem,windows
+
+LIBS = -L$(MINGW)/java/bin -L$(MINGW)/lib -lwinmm -lole32 -luuid -static-libgcc -static-libstdc++ $(JAWT)
+
+BINDIR = ../../../target/cpp/objects
+INSTALL_PATH = ../resources/META-INF/lib/win32-x86
+
+CXX_SOURCES = jniload.cpp utils.cpp windows/nativedialogs.cpp
+WIN32_OBJECTS = $(patsubst windows/%.cpp, $(BINDIR)/%.o, $(CXX_SOURCES))
+OBJECTS = $(patsubst %.cpp, $(BINDIR)/%.o, $(WIN32_OBJECTS))
+
+LIBPREFIX =
+LIBSUFFIX =
+LIBEXTENSION = dll
+LIBSHORTNAME = nativedialogs
+LIBRARY = $(BINDIR)/$(LIBPREFIX)$(LIBSHORTNAME)$(LIBSUFFIX).$(LIBEXTENSION)
+
+$(BINDIR)/%.o:	windows/%.cpp
+	$(CXX) $(INCLUDE) $(CXXFLAGS) $< -o $@
+
