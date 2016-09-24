@@ -94,14 +94,14 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPa
         
         NSString* nsPath = (path != NULL ? JNFJavaToNSString(env, (jstring)path) : nil);
         if(nsPath == nil) {
-            return 1;
+            return ca_hedlund_desktopicons_DesktopIcons_FILE_NOT_FOUND;
         }
         
         NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
         NSImage* iconImage = [workspace iconForFile:nsPath];
         
         if(iconImage == NULL) {
-            return 2;
+            return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
         }
         
         drawImage(env, img, iconImage, x, y, w, h);
@@ -120,14 +120,14 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForFi
         
         NSString* nsType = (type != NULL ? JNFJavaToNSString(env, (jstring)type) : nil);
         if(nsType == NULL) {
-            return 2;
+            return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
         }
         
         NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
         NSImage* iconImage = [workspace iconForFileType:nsType];
         
         if(iconImage == NULL) {
-            return 2;
+            return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
         }
         
         drawImage(env, img, iconImage, x, y, w, h);
@@ -148,7 +148,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawStockIcon
         NSImage* iconImage = [workspace iconForFileType:NSFileTypeForHFSTypeCode(iconId)];
         
         if(iconImage == NULL) {
-            return 2;
+            return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
         }
         
         drawImage(env, img, iconImage, x, y, w, h);

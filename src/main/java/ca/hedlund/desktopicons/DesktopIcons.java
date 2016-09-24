@@ -22,6 +22,9 @@ public class DesktopIcons {
 	private final static int DEFAULT_WIDTH = 32;
 	private final static int DEFAULT_HEIGHT = 32;
 	
+	private final static int OK = 0;
+	private final static int FILE_NOT_FOUND = 1;
+	private final static int ICON_NOT_FOUND = 2;
 	private final static int LIBRARY_NOT_FOUND = 3;
 	
 	private static boolean libraryLoaded = false;
@@ -80,13 +83,14 @@ public class DesktopIcons {
 		int err = 
 				(libraryLoaded ? _drawIconForPath(path, img, x, y, width, height) : LIBRARY_NOT_FOUND);
 		switch(err) {
-		case 0:
-			// ok!
+		case OK:
 			break;
 			
-		case 1:
-			// file not found
+		case FILE_NOT_FOUND:
 			throw new DesktopIconException(new FileNotFoundException(path));
+			
+		case ICON_NOT_FOUND:
+			throw new DesktopIconException("Icon not found");
 			
 		case LIBRARY_NOT_FOUND:
 			throw new DesktopIconException(new UnsupportedOperationException());
@@ -154,9 +158,11 @@ public class DesktopIcons {
 		int err = 
 				(libraryLoaded ? _drawIconForFileType(type, img, x, y, width, height) : LIBRARY_NOT_FOUND);
 		switch(err) {
-		case 0:
-			// ok!
+		case OK:
 			break;
+			
+		case ICON_NOT_FOUND:
+			throw new DesktopIconException("Icon not found");
 		
 		case LIBRARY_NOT_FOUND:
 			throw new DesktopIconException(new UnsupportedOperationException());
@@ -188,8 +194,8 @@ public class DesktopIcons {
 	 * @return
 	 * @throws DesktopIconException
 	 */
-	public static Image getStockIcon(int id) throws DesktopIconException {
-		return getStockIcon(id, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	public static Image getStockIcon(StockIcon icon) throws DesktopIconException {
+		return getStockIcon(icon, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
 	/**
@@ -202,10 +208,10 @@ public class DesktopIcons {
 	 * @return
 	 * @throws DesktopIconException
 	 */
-	public static Image getStockIcon(int id, int width, int height) throws DesktopIconException {
+	public static Image getStockIcon(StockIcon icon, int width, int height) throws DesktopIconException {
 		final BufferedImage bufferedImage = new BufferedImage(width, height, 
 				BufferedImage.TYPE_INT_ARGB);
-		drawStockIcon(id, bufferedImage, 0, 0, width, height);
+		drawStockIcon(icon, bufferedImage, 0, 0, width, height);
 		return bufferedImage;
 	}
 	
@@ -221,14 +227,16 @@ public class DesktopIcons {
 	 * @param height
 	 * @throws DesktopIconException
 	 */
-	public static void drawStockIcon(int id, BufferedImage img, int x, int y, int width, int height) 
+	public static void drawStockIcon(StockIcon icon, BufferedImage img, int x, int y, int width, int height) 
 		throws DesktopIconException {
 		int err = 
-				(libraryLoaded ? _drawStockIcon(id, img, x, y, width, height) : LIBRARY_NOT_FOUND);
+				(libraryLoaded ? _drawStockIcon(icon.getId(), img, x, y, width, height) : LIBRARY_NOT_FOUND);
 		switch(err) {
-		case 0:
-			// ok!
+		case OK:
 			break;
+			
+		case ICON_NOT_FOUND:
+			throw new DesktopIconException("Icon not found");
 			
 		case LIBRARY_NOT_FOUND:
 			throw new DesktopIconException(new UnsupportedOperationException());
