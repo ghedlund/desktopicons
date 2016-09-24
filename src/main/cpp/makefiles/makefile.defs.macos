@@ -9,7 +9,7 @@ CXX = clang++
 SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
 
-CXXFLAGS = -c -mmacosx-version-min=10.7 -fmessage-length=0 -D_JNI_IMPLEMENTATION_ -Wall -ansi \
+CXXFLAGS = -g -c -mmacosx-version-min=10.7 -fmessage-length=0 -D_JNI_IMPLEMENTATION_ -Wall -ansi \
         -fPIC -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Headers -I../../../target/generated-sources/cpp/include \
         -F$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaNativeFoundation.framework/Headers
 
@@ -23,7 +23,7 @@ LDFLAGS = -shared -lobjc -L$(JAVA_HOME)/jre/lib -ljawt -framework Foundation -fr
 BINDIR = ../../../target/cpp/objects
 INSTALL_PATH = ../resources/META-INF/lib/macos
 
-CXX_SOURCES = jniload.cpp
+CXX_SOURCES = jniload.cpp common.cpp
 OBJC_SOURCES = macos/desktopicons.mm
 OBJC_OBJECTS = $(patsubst macos/%.mm, $(BINDIR)/%.o, $(OBJC_SOURCES))
 OBJECTS = $(patsubst %.cpp, $(BINDIR)/%.o, $(CXX_SOURCES))
