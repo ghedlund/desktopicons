@@ -24,8 +24,8 @@ public class TestIcon {
 					final BufferedImage img = 
 							new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
 					
-					DesktopIcons.drawIconForPath("/System/Library/CoreServices/Finder.app",
-									img, 32, 32, 64, 64);
+					DesktopIcons.drawStockIcon(MacOSStockIcons.GenericHardDiskIcon.getId(),
+									img, 0, 0, 128, 128);
 					label.setIcon(new ImageIcon(img));
 					testFrame.pack();
 				} catch (DesktopIconException ex) {

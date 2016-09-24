@@ -65,6 +65,29 @@ NSBitmapImageRep* getResizedBitmap(NSImage* sourceImg, int w, int h) {
     return rep;
 }
 
+void drawImage(JNIEnv *env, jobject bufferedImage, NSImage* sourceImg, int x, int y, int w, int h) {
+    // convert to 72dpi bitmap
+    NSBitmapImageRep* imageRep = getResizedBitmap(sourceImg, w, h);
+    
+    // draw into java graphics context
+    for(int col = 0; col < w; col++) {
+        for(int row = 0; row < h; row++) {
+            NSColor* color = [imageRep colorAtX:col y:row];
+            int argb = ToARGB([color alphaComponent],
+                              [color redComponent],
+                              [color greenComponent],
+                              [color blueComponent]);
+            drawPixel(env, bufferedImage, x+col, y+row, argb);
+        }
+    }
+    [imageRep release];
+}
+
+/*
+ * Class:     ca_hedlund_desktopicons_DesktopIcons
+ * Method:    _drawIconForPath
+ * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;IIII)I
+ */
 JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPath
     (JNIEnv * env, jclass DesktopIcons, jstring path, jobject img, jint x, jint y, jint w, jint h) {
         int retVal = 0;
@@ -81,21 +104,54 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPa
             return 2;
         }
         
-        // convert to 72dpi bitmap
-        NSBitmapImageRep* imageRep = getResizedBitmap(iconImage, w, h);
+        drawImage(env, img, iconImage, x, y, w, h);
         
-        // draw into java graphics context
-        for(int col = 0; col < w; col++) {
-            for(int row = 0; row < h; row++) {
-                NSColor* color = [imageRep colorAtX:col y:row];
-                int argb = ToARGB([color alphaComponent],
-                                  [color redComponent],
-                                  [color greenComponent],
-                                  [color blueComponent]);
-                drawPixel(env, img, x+col, y+row, argb);
-            }
+        return retVal;
+}
+
+/*
+ * Class:     ca_hedlund_desktopicons_DesktopIcons
+ * Method:    _drawIconForFileType
+ * Signature: (Ljava/lang/String;Ljava/awt/image/BufferedImage;IIII)I
+ */
+JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForFileType
+    (JNIEnv * env, jclass DesktopIcons, jstring type, jobject img, jint x, jint y, jint w, jint h) {
+        int retVal = 0;
+        
+        NSString* nsType = (type != NULL ? JNFJavaToNSString(env, (jstring)type) : nil);
+        if(nsType == NULL) {
+            return 2;
         }
-        [imageRep release];
+        
+        NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
+        NSImage* iconImage = [workspace iconForFileType:nsType];
+        
+        if(iconImage == NULL) {
+            return 2;
+        }
+        
+        drawImage(env, img, iconImage, x, y, w, h);
+        
+        return retVal;
+}
+
+/*
+ * Class:     ca_hedlund_desktopicons_DesktopIcons
+ * Method:    _drawStockIcon
+ * Signature: (ILjava/awt/image/BufferedImage;IIII)I
+ */
+JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawStockIcon
+    (JNIEnv * env, jclass DesktopIcons, jint iconId, jobject img, jint x, jint y, jint w, jint h) {
+        int retVal = 0;
+        
+        NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
+        NSImage* iconImage = [workspace iconForFileType:NSFileTypeForHFSTypeCode(iconId)];
+        
+        if(iconImage == NULL) {
+            return 2;
+        }
+        
+        drawImage(env, img, iconImage, x, y, w, h);
         
         return retVal;
 }
