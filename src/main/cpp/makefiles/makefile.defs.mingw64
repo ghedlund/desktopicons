@@ -12,7 +12,7 @@ INCLUDE = -I../../../target/generated-sources/cpp/include -I$(MINGW)/java/includ
 CXXFLAGS = -DWINVER=0x0600 -D_WIN32_WINNT=0x0600 -D_WIN32_IE=0x0600 -DUNICODE -D_FILE_OFFSET_BITS=64 -O1 $(INCLUDE)
 LDFLAGS = -shared -mwindows -Wl,--subsystem,windows
 
-LIBS = -L$(MINGW)/java/bin -L$(MINGW)/lib -lwinmm -static-libgcc -static-libstdc++ $(JAWT)
+LIBS = -L$(MINGW)/java/bin -L$(MINGW)/lib -lwinmm -lole32 -lgdiplus -static-libgcc -static-libstdc++ $(JAWT)
 
 BINDIR = ../../../target/cpp/objects
 INSTALL_PATH = ../resources/META-INF/lib/win32-x64

@@ -120,15 +120,19 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPa
 
 	jboolean isCopy;
 	const char *szPath = env->GetStringUTFChars(path, &isCopy);
+	wchar_t* pszPath = new wchar_t[strlen(szPath)+1];
+	mbstowcs(pszPath, szPath, strlen(szPath)+1);
 
 	SHFILEINFO sfi = {0};
-	SHGetFileInfo(szPath, 0, &sfi, sizeof(SHFILEINFO), SHGFI_ICON | SHGFI_DISPLAYNAME);
+	SHGetFileInfo(pszPath, 0, &sfi, sizeof(SHFILEINFO), SHGFI_ICON | SHGFI_DISPLAYNAME);
 	if (sfi.hIcon == NULL) {
 		return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
 	}
 	env->ReleaseStringUTFChars(path, szPath);
 	
 	DrawImage(env, bufferedImage, sfi.hIcon, x, y, w, h);
+
+	delete [] pszPath;
 	
 	DestroyIcon(sfi.hIcon);
 	CoUninitialize();
@@ -151,9 +155,11 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForFi
 
 	jboolean isCopy;
 	const char *szPath = env->GetStringUTFChars(type, &isCopy);
+	wchar_t *pszPath = new wchar_t[strlen(szPath)+1];
+	mbstowcs(pszPath, szPath, strlen(szPath)+1);
 
 	SHFILEINFO sfi = { 0 };
-	SHGetFileInfo(szPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(SHFILEINFO), SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_DISPLAYNAME);
+	SHGetFileInfo(pszPath, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(SHFILEINFO), SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_DISPLAYNAME);
 	if (sfi.hIcon == NULL) {
 		return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
 	}
