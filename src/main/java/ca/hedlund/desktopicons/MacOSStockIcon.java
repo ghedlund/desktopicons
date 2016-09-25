@@ -4,7 +4,7 @@ package ca.hedlund.desktopicons;
  * Standard Finder icons.
  * 
  */
-public enum MacOSStockIcons implements StockIcon {
+public enum MacOSStockIcon implements StockIcon {
 	ClipboardIcon ("CLIP"),
 	ClippingUnknownTypeIcon ("clpu"),
 	ClippingPictureTypeIcon ("clpp"),
@@ -53,7 +53,7 @@ public enum MacOSStockIcons implements StockIcon {
 	
 	private final String fourByteCode;
 	
-	MacOSStockIcons(String fourByteCode) {
+	MacOSStockIcon(String fourByteCode) {
 		this.fourByteCode = fourByteCode;
 		
 		if(this.fourByteCode.length() != 4)

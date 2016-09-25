@@ -155,6 +155,9 @@ public class DesktopIcons {
 	 */
 	public static void drawIconForFileType(String type, BufferedImage img, int x, int y, int width, int height) 
 		throws DesktopIconException {
+		if(NativeUtilities.isWindows() && type.charAt(0) != '.') {
+			type = "." + type;
+		}
 		int err = 
 				(libraryLoaded ? _drawIconForFileType(type, img, x, y, width, height) : LIBRARY_NOT_FOUND);
 		switch(err) {
@@ -187,7 +190,7 @@ public class DesktopIcons {
 	
 	/**
 	 * Return a 32x32px icon for the given stock icon id.
-	 * Id should come from one of the enums {@link MacOSStockIcons} or
+	 * Id should come from one of the enums {@link MacOSStockIcon} or
 	 * {@link WindowsStockIcons}.
 	 * 
 	 * @param id

@@ -57,7 +57,30 @@ public class TestStockIcons {
 			
 			if(NativeUtilities.isMacOs()) {
 				int col = 0;
-				for(MacOSStockIcons stockIcon:MacOSStockIcons.values()) {
+				for(MacOSStockIcon stockIcon:MacOSStockIcon.values()) {
+					gbc.gridx = col;
+					
+					final JLabel label = new JLabel(stockIcon.toString());
+					try {
+						final ImageIcon icn = 
+								new ImageIcon(DesktopIcons.getStockIcon(stockIcon, width, height));
+						label.setIcon(icn);
+						label.setHorizontalTextPosition(SwingConstants.CENTER);
+						label.setVerticalTextPosition(SwingConstants.BOTTOM);
+					} catch (DesktopIconException e) {
+						e.printStackTrace();
+					}
+					panel.add(label, gbc);
+					
+					++col;
+					if(col == 5) {
+						gbc.gridy++;
+						col = 0;
+					}
+				}
+			} else if(NativeUtilities.isWindows()) {
+				int col = 0;
+				for(WindowsStockIcon stockIcon:WindowsStockIcon.values()) {
 					gbc.gridx = col;
 					
 					final JLabel label = new JLabel(stockIcon.toString());
