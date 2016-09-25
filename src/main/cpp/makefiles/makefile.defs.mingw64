@@ -12,19 +12,19 @@ INCLUDE = -I../../../target/generated-sources/cpp/include -I$(MINGW)/java/includ
 CXXFLAGS = -DWINVER=0x0600 -D_WIN32_WINNT=0x0600 -D_WIN32_IE=0x0600 -DUNICODE -D_FILE_OFFSET_BITS=64 -O1 $(INCLUDE)
 LDFLAGS = -shared -mwindows -Wl,--subsystem,windows
 
-LIBS = -L$(MINGW)/java/bin -L$(MINGW)/lib -lwinmm -lole32 -luuid -static-libgcc -static-libstdc++ $(JAWT)
+LIBS = -L$(MINGW)/java/bin -L$(MINGW)/lib -lwinmm -static-libgcc -static-libstdc++ $(JAWT)
 
 BINDIR = ../../../target/cpp/objects
 INSTALL_PATH = ../resources/META-INF/lib/win32-x64
 
-CXX_SOURCES = jniload.cpp utils.cpp windows/nativedialogs.cpp
+CXX_SOURCES = jniload.cpp common.cpp windows/desktopicons.cpp
 WIN32_OBJECTS = $(patsubst windows/%.cpp, $(BINDIR)/%.o, $(CXX_SOURCES))
 OBJECTS = $(patsubst %.cpp, $(BINDIR)/%.o, $(WIN32_OBJECTS))
 
 LIBPREFIX =
 LIBSUFFIX =
 LIBEXTENSION = dll
-LIBSHORTNAME = nativedialogs
+LIBSHORTNAME = desktopicons
 LIBRARY = $(BINDIR)/$(LIBPREFIX)$(LIBSHORTNAME)$(LIBSUFFIX).$(LIBEXTENSION)
 
 $(BINDIR)/%.o:	windows/%.cpp
