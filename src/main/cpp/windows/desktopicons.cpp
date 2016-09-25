@@ -58,10 +58,6 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPa
 	SHFILEINFOW sfi = {0};
 	hr = SHGetFileInfo(pszPath, 0, &sfi, sizeof(SHFILEINFOW), SHGFI_ICON);
 	
-	if(hr != 0) {
-		return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
-	}
-
 	drawImage(env, bufferedImage, sfi.hIcon, x, y, w, h);
 
 	delete [] pszPath;
