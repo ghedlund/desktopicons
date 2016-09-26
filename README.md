@@ -15,7 +15,7 @@ desktopicons is a JNI library allowing access to system icons such as:
 
  1. Get icon for a file:
 
-```java
+   ```java
 import ca.hedlund.desktopicons.*;
 ...
 
@@ -29,7 +29,7 @@ try {
 
  2. Get icon for a file type (xml)
 
-```java
+   ```java
 String type = "xml";
 try {
 	Image img = DesktopIcons.getIconForFileType(type);
@@ -40,7 +40,7 @@ try {
 
  3. Get stock icon (recycle/trash)
 
-```java
+   ```java
 StockIcon trashIcon = 
 	(NativeUtilites.isMacOs() ? MacOSStockIcons.TrashIcon : WindowsStockIcon.RECYCLE_BIN );
 try {
