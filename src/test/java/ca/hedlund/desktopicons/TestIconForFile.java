@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 public class TestIconForFile {
 	
 	public static void main(String[] args) throws Exception {
-		final String path = "mkv";
+		final String path = "pom.xml";
 		
 		final Runnable onEDT = () -> {
 			final JFrame f = new JFrame();
@@ -21,7 +21,7 @@ public class TestIconForFile {
 			btn.addActionListener( (e) -> {
 				try {
 					final ImageIcon icon = new ImageIcon(
-							DesktopIcons.getStockIcon(defaultIcon, 64, 64));
+							DesktopIcons.getIconForPath(path, 64, 64));
 					lbl.setIcon(icon);
 					f.pack();
 				} catch (Exception ex) {
@@ -33,12 +33,11 @@ public class TestIconForFile {
 			f.getContentPane().add(lbl, BorderLayout.CENTER);
 			f.getContentPane().add(btn, BorderLayout.EAST);
 			
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			f.pack();
 			f.setVisible(true);
 		};
 		SwingUtilities.invokeLater(onEDT);
 	}
-	
-	final static StockIcon defaultIcon = () -> { return 1; };
 
 }
