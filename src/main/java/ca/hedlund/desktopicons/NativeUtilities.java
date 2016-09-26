@@ -1,6 +1,6 @@
 /*
- * This file is part of nativedialogs for java
- * Copyright (C) 2016 Gregory Hedlund &lt;ghedlund@mun.ca&gt;
+ * desktopicons - Load system icons for paths, types and stock icons.
+ * Copyright (C) 2016, Gregory Hedlund <ghedlund@mun.ca>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
