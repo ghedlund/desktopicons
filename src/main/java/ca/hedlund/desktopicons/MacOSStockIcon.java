@@ -184,8 +184,6 @@ public enum MacOSStockIcon implements StockIcon {
 	UserIcon("user"),
 	OwnerIcon("susr"),
 	GroupIcon("grup");
-						   
-	   
 	
 	private final String fourByteCode;
 	
