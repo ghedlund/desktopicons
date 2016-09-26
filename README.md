@@ -15,9 +15,8 @@ desktopicons is a JNI library allowing access to system icons such as:
 
  1. Get icon for a file:
 
-{{{#!java
+```java
 import ca.hedlund.desktopicons.*;
-
 ...
 
 String path = "....";
@@ -26,30 +25,30 @@ try {
 } catch (DesktopoIconException e) {
 	e.printStackTrace();
 }
-}}}
+```
 
  2. Get icon for a file type (xml)
 
-{{{#!java
+```java
 String type = "xml";
 try {
-	java.awt.Image img = DesktopIcons.getIconForFileType(type);
+	Image img = DesktopIcons.getIconForFileType(type);
 } catch (DesktopIconException e) {
 	e.printStackTrace();
 }
-}}}
+```
 
  3. Get stock icon (recycle/trash)
 
-{{{#!java
+```java
 StockIcon trashIcon = 
-	(NatvieUtilities.isMacOs() ? MacOSStockIcons.TrashIcon : WindowsStockIcon.RECYCLE_BIN );
+	(NativeUtilites.isMacOs() ? MacOSStockIcons.TrashIcon : WindowsStockIcon.RECYCLE_BIN );
 try {
-	java.awt.Image img = DesktopIcons.getStockIcon(trashIcon);
+	Image img = DesktopIcons.getStockIcon(trashIcon);
 } catch (DesktopIconException e) {
 	e.printStackTrace();
 }
-}}}
+```
 
 The methods above all return a 32x32px image. Variant methods are available allowing different sizes as well as
 a methods for drawing directly to a java.awt.image.BufferedImage.
