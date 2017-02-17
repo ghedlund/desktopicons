@@ -22,7 +22,7 @@ desktopicons is a JNI library allowing access to system icons such as:
 	String path = "....";
 	try {
 		java.awt.Image img = DesktopIcons.getIconForPath(path);
-	} catch (DesktopoIconException e) {
+	} catch (DesktopIconException e) {
 		e.printStackTrace();
 	}
 ```
