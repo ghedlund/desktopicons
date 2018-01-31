@@ -1,0 +1,27 @@
+# File: makefile.defs.linux-amd64
+# System: linux (gtk)
+
+LD = g++
+CXX = g++
+
+CXXFLAGS = -g -c -std=gnu++0x -Wshadow -fPIC -fpermissive -DUNICODE -D_FILE_OFFSET_BITS=64 $(INCLUDE)
+INCLUDE = -I../../../target/generated-sources/cpp/include -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux `pkg-config --cflags gtk+-2.0`
+
+LDFLAGS = -shared 
+LIBS = -static-libgcc -static-libstdc++ -L$(JAVA_HOME)/lib/amd64 -l jawt `pkg-config --libs gtk+-2.0`
+
+BINDIR = ../../../target/cpp/objects
+INSTALL_PATH = ../resources/META-INF/lib/linux-amd64
+
+CXX_SOURCES = jniload.cpp common.cpp linux/desktopicons.cpp
+LINUX_OBJECTS = $(patsubst linux/%.cpp, $(BINDIR)/%.o, $(CXX_SOURCES))
+OBJECTS = $(patsubst %.cpp, $(BINDIR)/%.o, $(LINUX_OBJECTS))
+
+LIBPREFIX = lib
+LIBSUFFIX =
+LIBEXTENSION = so
+LIBSHORTNAME = desktopicons
+LIBRARY = $(BINDIR)/$(LIBPREFIX)$(LIBSHORTNAME)$(LIBSUFFIX).$(LIBEXTENSION)
+
+$(BINDIR)/%.o:	linux/%.cpp
+	$(CXX) $(INCLUDE) $(CXXFLAGS) $< -o $@

@@ -126,7 +126,7 @@ public class NativeUtilities {
 			folder += "macos";
 		} else if(isLinux()) {
 			lib = "lib" + libName + ".so";
-			folder += "linux";
+			folder += "linux-amd64";
 		} else if(isWindows()) {
 			lib = libName + ".dll";
 			folder += "win32";

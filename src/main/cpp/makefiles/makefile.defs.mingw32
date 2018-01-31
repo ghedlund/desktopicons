@@ -1,6 +1,5 @@
 # File: makefile.defs.mingw32
 # System: MinGW (32-bit)
-# Greg Hedlund, 26 Aug 2016
 
 MINGW = /mingw32
 JAWT = $(MINGW)/java/lib/jawt.lib

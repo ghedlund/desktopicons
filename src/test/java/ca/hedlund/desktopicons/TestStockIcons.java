@@ -57,7 +57,15 @@ public class TestStockIcons {
 		}
 		
 		private void init() {
+			getContentPane().setLayout(new BorderLayout());
 			
+			JButton btn = new JButton("Click me");
+			btn.addActionListener( (e) -> update() );
+			
+			getContentPane().add(btn, BorderLayout.NORTH);
+		}
+		
+		private void update() {
 			final int width = 64;
 			final int height = 64;
 			
@@ -118,12 +126,34 @@ public class TestStockIcons {
 						col = 0;
 					}
 				}
+			} else if(NativeUtilities.isLinux()) {
+				int col = 0;
+				for(GtkStockIcon stockIcon:GtkStockIcon.values()) {
+					gbc.gridx = col;
+					
+					final JLabel label = new JLabel(stockIcon.toString());
+					try {
+						final ImageIcon icn = 
+								new ImageIcon(DesktopIcons.getStockIcon(stockIcon, width, height));
+						label.setIcon(icn);
+						label.setHorizontalTextPosition(SwingConstants.CENTER);
+						label.setVerticalTextPosition(SwingConstants.BOTTOM);
+					} catch (DesktopIconException e) {
+						e.printStackTrace();
+					}
+					panel.add(label, gbc);
+					
+					++col;
+					if(col == 5) {
+						gbc.gridy++;
+						col = 0;
+					}
+				}
 			}
 			
-			super.getContentPane().setLayout(new BorderLayout());
 			super.getContentPane().add(new JScrollPane(panel), BorderLayout.CENTER);
 		}
-		
 	}
+	
 	
 }

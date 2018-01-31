@@ -1,6 +1,5 @@
 # File: makefile.defs.macos
 # System: macos
-# Greg Hedlund, 26 Aug 2016
 
 LD = clang++
 CXX = clang++
