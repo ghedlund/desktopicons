@@ -178,7 +178,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForFi
 
 	env->ReleaseStringUTFChars(type, szType);
 
-	return 0;
+	return retVal;
 }
 
 /*

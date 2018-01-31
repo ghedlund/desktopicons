@@ -38,7 +38,7 @@ public class TestIconForFile {
 			btn.addActionListener( (e) -> {
 				try {
 					final ImageIcon icon = new ImageIcon(
-							DesktopIcons.getIconForPath(path, 64, 64));
+							DesktopIcons.getIconForFileType("xml", 64, 64));
 					lbl.setIcon(icon);
 					f.pack();
 				} catch (Exception ex) {
