@@ -40,8 +40,7 @@ static GdkPixbuf* load_icon(const gchar* name, gint size)
 	GtkIconLookupFlags flags = GTK_ICON_LOOKUP_FORCE_SIZE | GTK_ICON_LOOKUP_GENERIC_FALLBACK;
 
 	auto icon_theme = gtk_icon_theme_get_default();
-	auto pixbuf = gtk_icon_theme_load_icon( icon_theme,
-			name, size, flags, &error);
+	auto pixbuf = gtk_icon_theme_load_icon( icon_theme, name, size, flags, &error);
 
 	if(!pixbuf) {
 		std::cerr << error->message << "\n";

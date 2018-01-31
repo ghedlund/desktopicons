@@ -4,7 +4,7 @@
 LD = g++
 CXX = g++
 
-CXXFLAGS = -g -c -std=gnu++0x -Wshadow -fPIC -fpermissive -DUNICODE -D_FILE_OFFSET_BITS=64 $(INCLUDE)
+CXXFLAGS = -g -c -std=gnu++0x -Wshadow -fPIC -fpermissive -DLINUX -DUNICODE -D_FILE_OFFSET_BITS=64 $(INCLUDE)
 INCLUDE = -I../../../target/generated-sources/cpp/include -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux `pkg-config --cflags gtk+-2.0`
 
 LDFLAGS = -shared 

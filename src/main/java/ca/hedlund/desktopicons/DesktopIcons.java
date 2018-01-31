@@ -145,6 +145,10 @@ public class DesktopIcons {
 	 * Return the system icon for <code>type</code> with
 	 * the given <code>width</code> and <code>height</code>.
 	 * 
+	 * On macOS/Windows <code>type</code> should be the extension of the file.
+	 * On Linux/gtk <code>type</code> is the name of the icon from the current
+	 * gtk icon theme.
+	 * 
 	 * @param type
 	 * @param width
 	 * @param height
