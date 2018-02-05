@@ -117,7 +117,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPa
 	GFileQueryInfoFlags queryFlags = G_FILE_QUERY_INFO_NONE;
 	GError *error = NULL;
 
-	XInitThreads();
+	//XInitThreads();
 	if(!gtk_init_check(0, NULL)) return -1;
 
 	auto szPath = env->GetStringUTFChars(path, &isCopy);
@@ -163,7 +163,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForFi
 	jboolean isCopy = false;
 	jint retVal = 0;
 
-	XInitThreads();
+	//XInitThreads();
 	if(!gtk_init_check(0, NULL)) return -1;
 
 	auto szType = env->GetStringUTFChars(type, &isCopy);
@@ -195,7 +195,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawStockIcon
 	jboolean isCopy = false;
 	jint retVal = 0;
 
-	XInitThreads();
+	//XInitThreads();
 	if(!gtk_init_check(0, NULL)) return -1;
 
 	auto GtkStockIcon = env->FindClass(szEnumClazz);

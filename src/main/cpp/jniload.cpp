@@ -20,6 +20,11 @@
 #include <windows.h>
 #endif
 
+#ifdef LINUX
+#include <X11/Xlib.h>
+#include <gtk/gtk.h>
+#endif
+
 #include "jniload.h"
 
 static JavaVM * jvm;
@@ -36,6 +41,9 @@ JNIEXPORT jint JNICALL
 JNIEXPORT void JNICALL
 	JNI_OnUnLoad(JavaVM *vm, void *reserved)
 {
+#ifdef LINUX
+	XInitThreads();
+#endif
 }
 
 jint

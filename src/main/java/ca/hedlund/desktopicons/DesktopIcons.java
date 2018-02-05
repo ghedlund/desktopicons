@@ -21,8 +21,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.SwingUtilities;
 
 /**
  * Utility methods for retrieving OS specific icons for paths
@@ -79,7 +82,22 @@ public class DesktopIcons {
 	public static Image getIconForPath(String path, int width, int height) throws DesktopIconException {
 		final BufferedImage bufferedImage = new BufferedImage(width, height, 
 				BufferedImage.TYPE_INT_ARGB);
-		drawIconForPath(path, bufferedImage, 0, 0, width, height);
+		final Runnable onEDT = () -> {
+			try {
+				drawIconForPath(path, bufferedImage, 0, 0, width, height);
+			} catch (DesktopIconException e) {
+				e.printStackTrace();
+			}
+		};
+		if(SwingUtilities.isEventDispatchThread()) {
+			onEDT.run();
+		} else {
+			try {
+				SwingUtilities.invokeAndWait(onEDT);
+			} catch (InvocationTargetException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		return bufferedImage;
 	}
 	
@@ -128,7 +146,7 @@ public class DesktopIcons {
 	 * @param height
 	 * @return
 	 */
-	private static native int _drawIconForPath(String path, BufferedImage img, int x, int y, int width, int height);
+	private synchronized static native int _drawIconForPath(String path, BufferedImage img, int x, int y, int width, int height);
 
 	/**
 	 * Return a 32x32px icon for the given file type.
@@ -158,7 +176,22 @@ public class DesktopIcons {
 	public static Image getIconForFileType(String type, int width, int height) throws DesktopIconException {
 		final BufferedImage bufferedImage = new BufferedImage(width, height, 
 				BufferedImage.TYPE_INT_ARGB);
-		drawIconForFileType(type, bufferedImage, 0, 0, width, height);
+		final Runnable onEDT = () -> {
+			try {
+				drawIconForFileType(type, bufferedImage, 0, 0, width, height);
+			} catch (DesktopIconException e) {
+				e.printStackTrace();
+			}
+		};
+		if(SwingUtilities.isEventDispatchThread()) {
+			onEDT.run();
+		} else {
+			try {
+				SwingUtilities.invokeAndWait(onEDT);
+			} catch (InvocationTargetException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		return bufferedImage;
 	}
 	
@@ -207,7 +240,7 @@ public class DesktopIcons {
 	 * @param height
 	 * @return
 	 */
-	private static native int _drawIconForFileType(String type, BufferedImage img, int x, int y, int width, int height);
+	private synchronized static native int _drawIconForFileType(String type, BufferedImage img, int x, int y, int width, int height);
 	
 	/**
 	 * Return a 32x32px icon for the given stock icon id.
@@ -235,7 +268,22 @@ public class DesktopIcons {
 	public static Image getStockIcon(StockIcon icon, int width, int height) throws DesktopIconException {
 		final BufferedImage bufferedImage = new BufferedImage(width, height, 
 				BufferedImage.TYPE_INT_ARGB);
-		drawStockIcon(icon, bufferedImage, 0, 0, width, height);
+		final Runnable onEDT = () -> {
+			try {
+				drawStockIcon(icon, bufferedImage, 0, 0, width, height);
+			} catch (DesktopIconException e) {
+				e.printStackTrace();
+			}
+		};
+		if(SwingUtilities.isEventDispatchThread()) {
+			onEDT.run();
+		} else {
+			try {
+				SwingUtilities.invokeAndWait(onEDT);
+			} catch (InvocationTargetException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		return bufferedImage;
 	}
 	
@@ -281,7 +329,7 @@ public class DesktopIcons {
 	 * @param height
 	 * @return
 	 */
-	private static native int _drawStockIcon(int id, BufferedImage img, int x, int y, int width, int height);
+	private synchronized static native int _drawStockIcon(int id, BufferedImage img, int x, int y, int width, int height);
 	
 }
 
