@@ -35,15 +35,17 @@ JNIEXPORT jint JNICALL
 {
 	jvm = vm;
 
+#ifdef LINUX
+	XInitThreads();
+#endif
+
 	return JNI_VERSION_1_4;
 }
 
 JNIEXPORT void JNICALL
 	JNI_OnUnLoad(JavaVM *vm, void *reserved)
 {
-#ifdef LINUX
-	XInitThreads();
-#endif
+
 }
 
 jint
