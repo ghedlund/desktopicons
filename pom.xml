@@ -24,12 +24,12 @@
     <repository>
       <id>phon.ca-release</id>
       <name>Phon Release</name>
-      <url>https://www.phon.ca/artifacts/libs-release-local</url>
+      <url>http://phon.ucs.mun.ca/artifacts/libs-release-local</url>
     </repository>
     <snapshotRepository>
       <id>phon.ca-snapshot</id>
       <name>Phon Snapshot</name>
-      <url>https://www.phon.ca/artifacts/libs-snapshot-local</url>
+      <url>http://phon.ucs.mun.ca/artifacts/libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
 
