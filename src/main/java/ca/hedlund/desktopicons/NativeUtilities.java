@@ -122,9 +122,6 @@ public class NativeUtilities {
 		if(isMacOs()) {
 			lib = "lib" + libName + ".jnilib";
 			folder += "macos";
-		} else if(isLinux()) {
-			lib = "lib" + libName + ".so";
-			folder += "linux-amd64";
 		} else if(isWindows()) {
 			lib = libName + ".dll";
 			folder += "win32";

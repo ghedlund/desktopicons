@@ -127,28 +127,7 @@ public class TestStockIcons {
 					}
 				}
 			} else if(NativeUtilities.isLinux()) {
-				int col = 0;
-				for(GtkStockIcon stockIcon:GtkStockIcon.values()) {
-					gbc.gridx = col;
-					
-					final JLabel label = new JLabel(stockIcon.toString());
-					try {
-						final ImageIcon icn = 
-								new ImageIcon(DesktopIcons.getStockIcon(stockIcon, width, height));
-						label.setIcon(icn);
-						label.setHorizontalTextPosition(SwingConstants.CENTER);
-						label.setVerticalTextPosition(SwingConstants.BOTTOM);
-					} catch (DesktopIconException e) {
-						e.printStackTrace();
-					}
-					panel.add(label, gbc);
-					
-					++col;
-					if(col == 5) {
-						gbc.gridy++;
-						col = 0;
-					}
-				}
+				// do nothing
 			}
 			
 			super.getContentPane().add(new JScrollPane(panel), BorderLayout.CENTER);

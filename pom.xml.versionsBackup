@@ -103,5 +103,5 @@
     </pluginManagement>
   </build>
   
-  <version>3</version>
+  <version>3-SNAPSHOT</version>
 </project>
