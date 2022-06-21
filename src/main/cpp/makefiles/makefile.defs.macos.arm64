@@ -4,20 +4,25 @@
 LD = clang++
 CXX = clang++
 
+TARGET = arm64-apple-macos11
+
 # change as necessary
 SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
-JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
+JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk-15.0.2.jdk/Contents/Home
 
-CXXFLAGS = -c -mmacosx-version-min=10.7 -fmessage-length=0 -D_JNI_IMPLEMENTATION_ -Wall -ansi \
-        -fPIC -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Headers -I../../../target/generated-sources/cpp/include \
-        -F$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaNativeFoundation.framework/Headers
+CXXFLAGS = -c -target $(TARGET) -fmessage-length=0 -D_JNI_IMPLEMENTATION_ -Wall -ansi -fPIC \
+        -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin \
+        -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Headers \
+        -I../../../target/generated-sources/cpp/include \
+        -F$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks \
+        -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaNativeFoundation.framework/Headers
 
 OBJC_FLAGS=-I$(JAVA_HOME)/include -I$(SDK)/System/Library/Frameworks/Foundation.framework/Headers \
         -I$(SDK)/System/Library/Frameworks/Cocoa.framework/Headers
  
 LDFLAGS = -shared -lobjc -L$(JAVA_HOME)/jre/lib -ljawt -framework Foundation -framework Cocoa \
         -F$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks -framework JavaNativeFoundation \
-        -mmacosx-version-min=10.7
+        -target $(TARGET)
 
 BINDIR = ../../../target/cpp/objects
 INSTALL_PATH = ../resources/META-INF/lib/macos
