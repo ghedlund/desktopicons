@@ -15,15 +15,15 @@
  */
 
 // cocoa includes
-#import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
 #import <jni.h>
 #import <jawt_md.h>
-#import <JavaNativeFoundation/JavaNativeFoundation.h>
+
+#include "JNIUtilities.h"
 
 #include "../jniload.h"
-#include "desktopicons.h"
+#include "ca_hedlund_desktopicons_DesktopIcons.h"
 #include "../common.h"
 
 int ToARGB(float a, float r, float g, float b) {
@@ -57,7 +57,7 @@ NSBitmapImageRep* getResizedBitmap(NSImage* sourceImg, int w, int h) {
     
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
-    [sourceImg drawInRect:NSMakeRect(0, 0, w, h) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+    [sourceImg drawInRect:NSMakeRect(0, 0, w, h) fromRect:NSZeroRect operation:NSCompositingOperationCopy fraction:1.0];
     [NSGraphicsContext restoreGraphicsState];
 
     return rep;
@@ -90,7 +90,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForPa
     (JNIEnv * env, jclass DesktopIcons, jstring path, jobject img, jint x, jint y, jint w, jint h) {
         int retVal = 0;
         
-        NSString* nsPath = (path != NULL ? JNFJavaToNSString(env, (jstring)path) : nil);
+        NSString* nsPath = (path != NULL ? NormalizedPathNSStringFromJavaString(env, (jstring)path) : nil);
         if(nsPath == nil) {
             return ca_hedlund_desktopicons_DesktopIcons_FILE_NOT_FOUND;
         }
@@ -116,7 +116,7 @@ JNIEXPORT jint JNICALL Java_ca_hedlund_desktopicons_DesktopIcons__1drawIconForFi
     (JNIEnv * env, jclass DesktopIcons, jstring type, jobject img, jint x, jint y, jint w, jint h) {
         int retVal = 0;
         
-        NSString* nsType = (type != NULL ? JNFJavaToNSString(env, (jstring)type) : nil);
+        NSString* nsType = (type != NULL ? JavaStringToNSString(env, (jstring)type) : nil);
         if(nsType == NULL) {
             return ca_hedlund_desktopicons_DesktopIcons_ICON_NOT_FOUND;
         }

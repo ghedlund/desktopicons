@@ -1,6 +1,7 @@
 # File: makefile.defs.macos
 # System: macos
 
+CC = clang
 LD = clang++
 CXX = clang++
 
@@ -8,33 +9,30 @@ TARGET = x86_64-apple-macos10.12
 
 # change as necessary
 SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
-JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk-15.0.2.jdk/Contents/Home
+JAVA_HOME = `/usr/libexec/java_home -v 18`
 
 CXXFLAGS = -c -target $(TARGET) -fmessage-length=0 -D_JNI_IMPLEMENTATION_ -Wall -ansi -fPIC \
         -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin \
-        -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Headers \
-        -I../../../target/generated-sources/cpp/include \
-        -F$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks \
-        -I$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaNativeFoundation.framework/Headers
+        -I../../../target/generated-sources/cpp/include
 
 OBJC_FLAGS=-I$(JAVA_HOME)/include -I$(SDK)/System/Library/Frameworks/Foundation.framework/Headers \
         -I$(SDK)/System/Library/Frameworks/Cocoa.framework/Headers
  
-LDFLAGS = -shared -lobjc -L$(JAVA_HOME)/jre/lib -ljawt -framework Foundation -framework Cocoa \
-        -F$(SDK)/System/Library/Frameworks/JavaVM.framework/Frameworks -framework JavaNativeFoundation \
+LDFLAGS = -shared -lobjc -L$(JAVA_HOME)/lib -ljawt -framework Foundation -framework Cocoa \
+        -F$(SDK)/System/Library/Frameworks -framework JavaNativeFoundation \
         -target $(TARGET)
 
-BINDIR = ../../../target/cpp/objects
+BINDIR = ../../../target/cpp/$(TARGET)/objects
 INSTALL_PATH = ../resources/META-INF/lib/macos
 
 CXX_SOURCES = jniload.cpp common.cpp
-OBJC_SOURCES = macos/desktopicons.mm
-OBJC_OBJECTS = $(patsubst macos/%.mm, $(BINDIR)/%.o, $(OBJC_SOURCES))
+OBJCXX_SOURCES = macos/JNIUtilities.mm macos/desktopicons.mm
+OBJCXX_OBJECTS = $(patsubst macos/%.mm, $(BINDIR)/%.o, $(OBJCXX_SOURCES))
 OBJECTS = $(patsubst %.cpp, $(BINDIR)/%.o, $(CXX_SOURCES))
-OBJECTS += $(OBJC_OBJECTS)
+OBJECTS += $(OBJCXX_OBJECTS)
 
 LIBPREFIX = lib
-LIBSUFFIX = 
+LIBSUFFIX = -$(TARGET)
 LIBEXTENSION = jnilib
 LIBSHORTNAME = desktopicons
 LIBRARY = $(BINDIR)/$(LIBPREFIX)$(LIBSHORTNAME)$(LIBSUFFIX).$(LIBEXTENSION)
