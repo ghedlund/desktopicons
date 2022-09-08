@@ -9,7 +9,6 @@ TARGET = x86_64-apple-macos10.12
 
 # change as necessary
 SDK = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
-JAVA_HOME = `/usr/libexec/java_home -v 18`
 
 CXXFLAGS = -c -target $(TARGET) -fmessage-length=0 -D_JNI_IMPLEMENTATION_ -Wall -ansi -fPIC \
         -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/darwin \
